@@ -21,7 +21,7 @@ const Sidebar = () => {
         {SidebarData.map((item, index) => (
           <li
             onClick={() => (window.location.pathname = item.path)}
-            className="p-4 mb-1 flex items-center cursor-pointer hover:bg-gray-400 rounded-md"
+            className="p-4 mb-1 flex items-center cursor-pointer hover:bg-gray-300 rounded-md dark:hover:bg-gray-700"
             key={index}
           >
             <div className="text-2xl">{item.icon}</div>
