@@ -16,13 +16,19 @@ const SidebarData = [
 ];
 const Sidebar = () => {
   return (
-    <div className="bg-gray-200 w-1/6 p-4 h-screen">
-      {SidebarData.map((item, index) => (
-        <div className="py-2 flex items-center cursor-pointer" key={index}>
-          <div className="text-2xl">{item.icon}</div>
-          <div className="pl-4">{item.title}</div>
-        </div>
-      ))}
+    <div className="p-4">
+      <ul>
+        {SidebarData.map((item, index) => (
+          <li
+            onClick={() => (window.location.pathname = item.path)}
+            className="p-4 mb-1 flex items-center cursor-pointer hover:bg-gray-400 rounded-md"
+            key={index}
+          >
+            <div className="text-2xl">{item.icon}</div>
+            <div className="pl-3">{item.title}</div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
