@@ -1,72 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table } from "antd";
 import { IoIosAddCircleOutline } from "react-icons/io";
-
-const columns = [
-  {
-    title: "Compare",
-    dataIndex: "id",
-    key: "id",
-    render: (id) => (
-      <button
-        className="text-2xl p-2 hover:text-blue-300"
-        onClick={() => console.log(`Showing ID: ${id}`)}
-      >
-        <IoIosAddCircleOutline />
-      </button>
-    ),
-  },
-
-  {
-    title: "Title",
-    dataIndex: "title",
-    key: "title",
-    sorter: (a, b) => a.title.localeCompare(b.title),
-  },
-  {
-    title: "Image",
-    dataIndex: "images",
-    key: "images",
-    render: (image) => (
-      <img src={image[0]} alt="product" width="100" height="100" />
-    ),
-  },
-  {
-    title: "Description",
-    dataIndex: "description",
-    key: "description",
-    width: "20%",
-    sorter: (a, b) => a.description.localeCompare(b.description),
-  },
-
-  {
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-    render: (price) => `$${price}`,
-    sorter: (a, b) => a.price - b.price,
-  },
-
-  {
-    title: "Discount Percentage",
-    dataIndex: "discountPercentage",
-    key: "discountPercentage",
-    sorter: (a, b) => a.discountPercentage - b.discountPercentage,
-  },
-  {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
-    sorter: (a, b) => a.brand.localeCompare(b.brand),
-  },
-  {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
-  },
-];
+import { ProductCompareContext } from "../context/ProductCompareContext";
 
 const ProductDetails = () => {
+  const { addProduct, products } = useContext(ProductCompareContext);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
@@ -75,6 +13,74 @@ const ProductDetails = () => {
       pageSize: 10,
     },
   });
+
+  const columns = [
+    {
+      title: "Compare",
+      dataIndex: "id",
+      key: "id",
+      render: (id, record) => (
+        <button
+          className={`text-2xl p-2 hover:text-blue-300 ${
+            products.some((p) => p.id === record.id) &&
+            "text-gray-400 hover:text-gray-400"
+          }`}
+          onClick={() => addProduct(record)}
+          disabled={products.some((p) => p.id === record.id)}
+        >
+          <IoIosAddCircleOutline />
+        </button>
+      ),
+    },
+
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      sorter: (a, b) => a.title.localeCompare(b.title),
+    },
+    {
+      title: "Image",
+      dataIndex: "images",
+      key: "images",
+      render: (image) => (
+        <img src={image[0]} alt="product" width="100" height="100" />
+      ),
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      width: "20%",
+      sorter: (a, b) => a.description.localeCompare(b.description),
+    },
+
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      render: (price) => `$${price}`,
+      sorter: (a, b) => a.price - b.price,
+    },
+
+    {
+      title: "Discount Percentage",
+      dataIndex: "discountPercentage",
+      key: "discountPercentage",
+      sorter: (a, b) => a.discountPercentage - b.discountPercentage,
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+      sorter: (a, b) => a.brand.localeCompare(b.brand),
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+    },
+  ];
 
   const fetchData = () => {
     setLoading(true);
@@ -125,16 +131,14 @@ const ProductDetails = () => {
     }
   };
   return (
-    <div className="ml-[17rem] py-20">
-      <Table
-        columns={columns}
-        rowKey={(record) => record.id}
-        dataSource={data}
-        pagination={tableParams.pagination}
-        loading={loading}
-        onChange={handleTableChange}
-      />
-    </div>
+    <Table
+      columns={columns}
+      rowKey={(record) => record.id}
+      dataSource={data}
+      pagination={tableParams.pagination}
+      loading={loading}
+      onChange={handleTableChange}
+    />
   );
 };
 

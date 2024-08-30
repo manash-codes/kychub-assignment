@@ -12,12 +12,14 @@ function App() {
           <aside class="h-screen fixed top-0 w-64 bg-gray-200 dark:bg-gray-800 dark:text-white">
             <Sidebar />
           </aside>
-          <main className="w-full">
+          <main className="w-full mr-2">
             <Navbar />
-            <Routes>
-              <Route path="/" element={<ProductDetails />} />
-              <Route path="/product-compare" element={<ProductCompare />} />
-            </Routes>
+            <div className="ml-[17rem] py-20">
+              <Routes>
+                <Route path="/" element={<ProductDetails />} />
+                <Route path="/product-compare" element={<ProductCompare />} />
+              </Routes>
+            </div>
           </main>
         </div>
       </Router>
