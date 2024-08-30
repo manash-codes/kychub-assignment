@@ -6,11 +6,11 @@ import { MdOutlineDarkMode } from "react-icons/md";
 const Navbar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   return (
-    <div className="px-8 py-4 bg-gray-200 dark:bg-gray-800 dark:text-white fixed flex items-center justify-between ml-64 w-5/6">
+    <div className="z-10 px-8 py-4 bg-gray-200 dark:bg-gray-800 dark:text-white fixed flex items-center justify-between ml-64 w-5/6">
       <div className="text-2xl">Home</div>
       <button
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        className="p-2 text-xl"
+        className="p-2 text-xl hover:text-blue-300"
       >
         {theme === "light" ? <MdOutlineDarkMode /> : <CiLight />}
       </button>
